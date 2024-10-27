@@ -31,7 +31,7 @@ public class Module6 {
     @Before
     @Step("Настройка драйвера")
     public void setDriver() throws MalformedURLException {
-        driver = driverFactory.setUp(Platform.ANDROID);
+        driver = SingletonAppiumDriver.getDriver();
 
     }
 
