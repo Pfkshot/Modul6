@@ -16,6 +16,9 @@ public class MainScreen extends Screen {
     @AndroidFindBy ( id = "activity_main_device_button")
     MobileElement btnDeviceSample;
 
+    @AndroidFindBy( id = "activity_main_webview_sample_button")
+    MobileElement webView;
+
 
     public MainScreen(AppiumDriver<?> driver) {
         super(driver);
@@ -49,6 +52,16 @@ public class MainScreen extends Screen {
     public DeviceSample clickDeviceSample(){
         btnDeviceSample.click();
         return new DeviceSample(driver);
+    }
+
+    public boolean isWebViewDisplayed(){
+        return webView.isDisplayed();
+    }
+
+    public WebView clickWebView(){
+        webView.click();
+        return new WebView(driver);
+
     }
 
 

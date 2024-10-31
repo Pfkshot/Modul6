@@ -3,8 +3,12 @@ import action.SwipeHelper;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.AppiumDriver;
 //import io.appium.java_client.android.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.qameta.allure.Description;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import org.junit.After;
@@ -13,17 +17,25 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import screens.AutoScrollScrollViewWithPadding;
 import screens.DeviceSample;
 import screens.MainScreen;
+import screens.WebView;
 
 import java.net.MalformedURLException;
 import java.time.Duration;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+
 public class Module6 {
+
 
     private final DriverFactory driverFactory = new DriverFactory();
     private AppiumDriver<?> driver;
@@ -32,7 +44,6 @@ public class Module6 {
     @Step("Настройка драйвера")
     public void setDriver() throws MalformedURLException {
         driver = SingletonAppiumDriver.getDriver();
-
     }
 
     @Description("тестирование функционала приложения Kasspresso")
@@ -47,6 +58,8 @@ public class Module6 {
         SwipeHelper swipeHelper = new SwipeHelper(driver);
 
         DeviceSample deviceSample = new DeviceSample(driver);
+
+        WebView webView = new WebView(driver);
 
         Assert.assertTrue(mainScreen.isAutoScrollScrollViewWithPaddingDisplayed());
         Assert.assertTrue(mainScreen.isAutoScrollScrollViewWithPaddingEnable());
@@ -80,6 +93,20 @@ public class Module6 {
         Assert.assertEquals(text, fieldInputText);
 
         driver.navigate().back();
+        driver.navigate().back();
+
+        mainScreen.isWebViewDisplayed();
+        webView.clickWebView();
+
+
+        changeDriverContextToWebView(driver);
+
+        webView.isAndroidArsenal();
+
+        Thread.sleep(5000);
+
+//        androidArsenal.click();
+
     }
 
     @After
@@ -128,7 +155,13 @@ public class Module6 {
         }
     }
 
-
+    public void changeDriverContextToWebView(AppiumDriver<?> driver) {
+        Set<String> contextHandles = driver.getContextHandles();
+        for (String name : contextHandles){
+            if (name.contains("WEBVIEW"))
+                driver.context(name);
+        }
+    }
 
 
 }
