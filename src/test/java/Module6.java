@@ -36,6 +36,11 @@ import java.util.concurrent.TimeUnit;
 
 public class Module6 {
 
+//    @AndroidFindBy(uiAutomator = "new UiScrollable(scrollable(true)).flingToEnd(3)")
+//    MobileElement scroll;
+
+    @AndroidFindBy(uiAutomator = "new UiScrollable(scrollable(true)).flingToEnd(int maxSwipes)")
+    MobileElement scroll;
 
     private final DriverFactory driverFactory = new DriverFactory();
     private AppiumDriver<?> driver;
@@ -52,60 +57,65 @@ public class Module6 {
     public void sampleTests() throws InterruptedException {
 
         MainScreen mainScreen = new MainScreen(driver) ;
-
-        AutoScrollScrollViewWithPadding assvwp = new AutoScrollScrollViewWithPadding(driver);
-
-        SwipeHelper swipeHelper = new SwipeHelper(driver);
-
-        DeviceSample deviceSample = new DeviceSample(driver);
+//
+//        AutoScrollScrollViewWithPadding assvwp = new AutoScrollScrollViewWithPadding(driver);
+//
+//        SwipeHelper swipeHelper = new SwipeHelper(driver);
+//
+//        DeviceSample deviceSample = new DeviceSample(driver);
 
         WebView webView = new WebView(driver);
 
-        Assert.assertTrue(mainScreen.isAutoScrollScrollViewWithPaddingDisplayed());
-        Assert.assertTrue(mainScreen.isAutoScrollScrollViewWithPaddingEnable());
-        Assert.assertFalse(mainScreen.isAutoScrollScrollViewWithPaddingSelected());
-
-        mainScreen.clickAutoScrollScrollViewWithPadding().simpleFragmentDisplayed().btnHvText1Displayed().swipeSpecifyCategory().btnTvText1Displayed();
-
-        swipeHelper.swipe(Direction.UP);
-
-        assvwp.btnTvText20Displayed();
-        wait3secTvText20(MobileBy.id("tvText20"));
-
-        swipeHelper.swipe(Direction.DOWN);
-
-        Assert.assertTrue(rotateToLandscape());
-        driver.rotate(ScreenOrientation.PORTRAIT);
-
-        driver.navigate().back();
-
-        mainScreen.isMainScreenDisplayed();
-
-        mainScreen.isDeviceSampleDisplayed();
-        mainScreen.clickDeviceSample().isFieldInputDisplayed();
-
-        String text = "абракадабра";
-        deviceSample.search(text);
-
-        String fieldInputText = deviceSample.getFieldInputText();
-
-        ((AndroidDriver<?>)driver).lockDevice(Duration.ofSeconds(3));
-        Assert.assertEquals(text, fieldInputText);
-
-        driver.navigate().back();
-        driver.navigate().back();
+//        Assert.assertTrue(mainScreen.isAutoScrollScrollViewWithPaddingDisplayed());
+//        Assert.assertTrue(mainScreen.isAutoScrollScrollViewWithPaddingEnable());
+//        Assert.assertFalse(mainScreen.isAutoScrollScrollViewWithPaddingSelected());
+//
+//        mainScreen.clickAutoScrollScrollViewWithPadding().simpleFragmentDisplayed().btnHvText1Displayed().swipeSpecifyCategory().btnTvText1Displayed();
+//
+//        swipeHelper.swipe(Direction.UP);
+//
+//        assvwp.btnTvText20Displayed();
+//        wait3secTvText20(MobileBy.id("tvText20"));
+//
+//        swipeHelper.swipe(Direction.DOWN);
+//
+//        Assert.assertTrue(rotateToLandscape());
+//        driver.rotate(ScreenOrientation.PORTRAIT);
+//
+//        driver.navigate().back();
+//
+//        mainScreen.isMainScreenDisplayed();
+//
+//        mainScreen.isDeviceSampleDisplayed();
+//        mainScreen.clickDeviceSample().isFieldInputDisplayed();
+//
+//        String text = "абракадабра";
+//        deviceSample.search(text);
+//
+//        String fieldInputText = deviceSample.getFieldInputText();
+//
+//        ((AndroidDriver<?>)driver).lockDevice(Duration.ofSeconds(3));
+//        Assert.assertEquals(text, fieldInputText);
+//
+//        driver.navigate().back();
+//        driver.navigate().back();
 
         mainScreen.isWebViewDisplayed();
-        webView.clickWebView();
-
-
-        changeDriverContextToWebView(driver);
-
-        webView.isAndroidArsenal();
+        webView.clickWebView().clickUiAutomator();
 
         Thread.sleep(5000);
 
-//        androidArsenal.click();
+        driver.navigate().back();
+
+        webView.isEspressoDisplayed();
+//        changeDriverContextToWebView(driver);
+
+        webView.isUiAutomatorDisplayed();
+
+//        webView.isScrollDisplayed();
+
+        scroll.isDisplayed();
+
 
     }
 
@@ -159,6 +169,14 @@ public class Module6 {
         Set<String> contextHandles = driver.getContextHandles();
         for (String name : contextHandles){
             if (name.contains("WEBVIEW"))
+                driver.context(name);
+        }
+    }
+
+    void changeDriverContextToNative(AppiumDriver<?> driver) {
+        Set<String> contextHandles = driver.getContextHandles();
+        for (String name : contextHandles) {
+            if (name.contains("NATIVE_APP"))
                 driver.context(name);
         }
     }

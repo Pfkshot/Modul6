@@ -7,33 +7,36 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class WebView extends MainScreen{
-//    @AndroidFindBy(xpath = "//android.widget.Image[@text = 'Android Arsenal']")
-//    MobileElement androidArsenal;
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"UI Automator\"]")
+    MobileElement uiAutomator;
 
-//    @AndroidFindBy(uiAutomator = "textContains(\"Android Arsenal\")")
-//    MobileElement androidArsenal;
+    @FindBy(xpath = "//android.view.View[@content-desc=\"Espresso\"]/android.widget.TextView")
+    MobileElement espresso;
 
-//    @FindBy(xpath = "a[@href = \"https://android-arsenal.com/details/1/7896\"]")
-//    WebElement androidArsenal;
+//    @AndroidFindBy(uiAutomator = "new UiScrollable(scrollable(true)).flingToEnd(int maxSwipes)")
+//    MobileElement scroll;
 
-//    @FindBy(xpath = "//img[@alt = \"Android Arsenal\"]")
-//    WebElement androidArsenal;
-
-    @FindBy(linkText = "Android Arsenal")
-    WebElement androidArsenal;
 
     public WebView(AppiumDriver<?> driver) {
         super(driver);
     }
 
-    public boolean isAndroidArsenal(){
-        return androidArsenal.isDisplayed();
+    public boolean isEspressoDisplayed(){
+        return espresso.isDisplayed();
     }
 
-//    public WebView clickWebView(){
-//        webView.click();
-//        return new WebView(driver);
-//
+
+    public boolean isUiAutomatorDisplayed(){
+        return uiAutomator.isDisplayed();
+    }
+
+//    public boolean isScrollDisplayed(){
+//        return scroll.isDisplayed();
 //    }
+
+    public WebView clickUiAutomator(){
+        uiAutomator.click();
+        return new WebView(driver);
+    }
 
 }
