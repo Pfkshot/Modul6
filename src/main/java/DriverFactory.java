@@ -1,4 +1,5 @@
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.events.EventFiringWebDriverFactory;
 import io.appium.java_client.ios.IOSDriver;
@@ -44,6 +45,7 @@ public class DriverFactory {
         driver = new AndroidDriver<>(remoteURL, capabilities);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver = EventFiringWebDriverFactory.getEventFiringWebDriver(driver, new EventListener());
+
 
         return (AndroidDriver<?>) driver;
     }
